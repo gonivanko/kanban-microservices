@@ -35,3 +35,9 @@ func (u *UserRepository) FindByEmail(email string) (*models.User, error) {
 	result := u.db.Where("email = ?", email).First(&user)
 	return &user, result.Error
 }
+
+func (u *UserRepository) FindById(userId int) (*models.User, error) {
+	var user models.User
+	result := u.db.Where("id = ?", userId).First(&user)
+	return &user, result.Error
+}

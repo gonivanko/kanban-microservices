@@ -6,6 +6,7 @@ import (
 	"authService/internal/services"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strconv"
 )
 
 type UserController struct {
@@ -75,5 +76,20 @@ func (u *UserController) ConfirmEmail(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"success": true,
 		"message": "Email confirmed",
+	})
+}
+
+func (u *UserController) Show(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	user, err := u.userService.FindUserById(id)
+	if err != nil {
+		httpError := errors.NewHttpError("User not found", err.Error(), http.StatusNotFound)
+		c.Error(httpError)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"user": user,
 	})
 }

@@ -23,6 +23,7 @@ func main() {
 		r.POST("/register", userController.Register)
 		r.POST("/login", userController.Login)
 		r.GET("/confirm", userController.ConfirmEmail)
+		r.GET("/users/:id", userController.Show)
 	})
 
 	r.Run()

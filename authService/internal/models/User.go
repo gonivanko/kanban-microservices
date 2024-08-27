@@ -10,8 +10,8 @@ type User struct {
 	gorm.Model
 	Username       string `json:"username"`
 	Email          string `json:"email"`
-	PasswordHash   string
-	EmailConfirmed bool
+	PasswordHash   string `json:"-"`
+	EmailConfirmed bool   `json:"email_confirmed"`
 }
 
 func (u *User) SetPassword(password string) {

@@ -73,3 +73,7 @@ func (u *UserService) ConfirmEmail(token string) bool {
 
 	return true
 }
+
+func (u *UserService) FindUserById(userId int) (*models.User, error) {
+	return u.repository.FindById(userId)
+}
