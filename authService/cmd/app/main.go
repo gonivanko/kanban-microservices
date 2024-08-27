@@ -26,5 +26,5 @@ func main() {
 		r.GET("/users/:id", userController.Show)
 	})
 
-	r.Run()
+	r.Run(":8081")
 }

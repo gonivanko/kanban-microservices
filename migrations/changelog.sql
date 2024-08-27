@@ -73,3 +73,8 @@ alter table users add column updated_at datetime not null;
 --changeset flaksie:4
 alter table users add column deleted_at datetime;
 alter table users change column updated_at updated_at datetime;
+
+--changeset flaksie:5
+alter table projects add column deleted_at datetime;
+alter table projects add column updated_at datetime;
+alter table projects add column created_at datetime not null;
