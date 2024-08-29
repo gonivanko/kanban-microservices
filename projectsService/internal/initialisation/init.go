@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"projectsService/internal/database"
+	"projectsService/internal/database/models"
 	"projectsService/internal/http/controllers"
 	"projectsService/internal/repository"
 	"projectsService/internal/services"
@@ -22,6 +23,7 @@ func InitServiceContainer(db *gorm.DB) *dig.Container {
 
 	container.Provide(database.NewPaginator)
 	container.Provide(repository.NewProjectRepository)
+	container.Provide(repository.NewUserGetter)
 	container.Provide(services.NewProjectsService)
 
 	container.Provide(controllers.NewProjectController)
@@ -44,4 +46,8 @@ func InitDatabase() *gorm.DB {
 	}
 
 	return db
+}
+
+func MigrateSchemas(db *gorm.DB) {
+	db.AutoMigrate(&models.Project{})
 }

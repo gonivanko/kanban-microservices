@@ -12,11 +12,11 @@ type ProjectDatabaseRepository struct {
 	paginator *database.Paginator
 }
 
-func (p *ProjectDatabaseRepository) Paginate(page, limit int) ([]models.Project, int, error) {
+func (p *ProjectDatabaseRepository) GetProjects(userID uint, page, limit int) ([]models.Project, int, error) {
 	var projects []models.Project
 	var count int64
 	p.db.Model(&models.Project{}).Count(&count)
-	result := p.paginator.Paginate(page, limit).Find(&projects)
+	result := p.paginator.Paginate(page, limit).Where("owner_id = ?", userID).Find(&projects)
 
 	return projects, int(count), result.Error
 }

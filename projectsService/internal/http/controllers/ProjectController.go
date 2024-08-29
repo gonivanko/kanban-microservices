@@ -14,10 +14,11 @@ type ProjectController struct {
 }
 
 func (p *ProjectController) GetProjects(c *gin.Context) {
+	userID, _ := strconv.Atoi(c.Param("userID"))
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	limit, _ := strconv.Atoi(c.DefaultQuery("limit", "10"))
 
-	paginated, meta, err := p.service.Paginate(page, limit)
+	paginated, meta, err := p.service.GetProjects(uint(userID), page, limit)
 	if err != nil {
 		httpError := errors.NewHttpError("Failed to apply pagination", err.Error(), http.StatusBadRequest)
 		c.Error(httpError)
@@ -54,11 +55,12 @@ func (p *ProjectController) CreateProject(c *gin.Context) {
 
 	_, err := p.service.Create(&project)
 	if err != nil {
-		c.Error(err)
+		httpError := errors.NewHttpError("Failed to create project", err.Error(), http.StatusInternalServerError)
+		c.Error(httpError)
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusCreated, gin.H{
 		"project": project,
 	})
 }

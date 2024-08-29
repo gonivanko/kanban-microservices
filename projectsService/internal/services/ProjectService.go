@@ -8,11 +8,12 @@ import (
 )
 
 type ProjectsService struct {
-	repository *repository.ProjectDatabaseRepository
+	repository     *repository.ProjectDatabaseRepository
+	userRepository repository.UserGetter
 }
 
-func (p *ProjectsService) Paginate(page, limit int) ([]models.Project, dto.PaginationMetaDTO, error) {
-	data, total, err := p.repository.Paginate(page, limit)
+func (p *ProjectsService) GetProjects(userID uint, page, limit int) ([]models.Project, dto.PaginationMetaDTO, error) {
+	data, total, err := p.repository.GetProjects(userID, page, limit)
 	if err != nil {
 		return nil, dto.PaginationMetaDTO{}, errors.New("paginate error:" + err.Error())
 	}
@@ -27,6 +28,11 @@ func (p *ProjectsService) Paginate(page, limit int) ([]models.Project, dto.Pagin
 }
 
 func (p *ProjectsService) Create(project *models.Project) (*models.Project, error) {
+	_, err := p.userRepository.GetUser(project.OwnerID)
+	if err != nil {
+		return nil, err
+	}
+
 	return p.repository.Create(project)
 }
 
@@ -43,6 +49,9 @@ func (p *ProjectsService) Find(id int) (*models.Project, error) {
 	return p.repository.FindProjectById(id)
 }
 
-func NewProjectsService(repository *repository.ProjectDatabaseRepository) *ProjectsService {
-	return &ProjectsService{repository: repository}
+func NewProjectsService(
+	repository *repository.ProjectDatabaseRepository,
+	userRepository repository.UserGetter,
+) *ProjectsService {
+	return &ProjectsService{repository: repository, userRepository: userRepository}
 }
