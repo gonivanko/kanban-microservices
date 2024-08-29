@@ -4,21 +4,22 @@ import (
 	"authService/internal/auth/jwt"
 	"authService/internal/dto"
 	"authService/internal/models"
+	"authService/internal/queue"
 	"authService/internal/repository"
 )
 
 type UserService struct {
-	repository          *repository.UserRepository
-	confirmationService EmailConfirmationService
+	repository *repository.UserRepository
+	sender     *queue.RabbitMQSender
 }
 
 func NewUserService(
 	repository *repository.UserRepository,
-	confirmationService EmailConfirmationService,
+	sender *queue.RabbitMQSender,
 ) *UserService {
 	return &UserService{
-		repository:          repository,
-		confirmationService: confirmationService,
+		repository: repository,
+		sender:     sender,
 	}
 }
 
@@ -28,11 +29,9 @@ func (u *UserService) RegisterUser(email, username, password string) (*models.Us
 		return nil, err
 	}
 
-	token, _ := jwt.GenerateAuthToken(user)
-
-	go u.confirmationService.Send(&dto.ConfirmationDTO{
-		User:  user,
-		Token: token,
+	u.sender.Send("user_registered", &dto.UserRegisteredDTO{
+		Username: user.Username,
+		Email:    user.Email,
 	})
 
 	return user, nil
@@ -55,23 +54,6 @@ func (u *UserService) Authenticate(email, password string) (string, bool) {
 	token, _ := jwt.GenerateAuthToken(user)
 
 	return token, true
-}
-
-func (u *UserService) ConfirmEmail(token string) bool {
-	claims, err := jwt.ParseToken(token)
-	if err != nil {
-		return false
-	}
-
-	user, err := u.repository.FindByEmail(claims.Email)
-	if err != nil {
-		return false
-	}
-
-	user.EmailConfirmed = true
-	u.repository.Update(user)
-
-	return true
 }
 
 func (u *UserService) FindUserById(userId int) (*models.User, error) {

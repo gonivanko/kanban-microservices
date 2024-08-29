@@ -1,9 +1,8 @@
 package services
 
 import (
-	"authService/internal/dto"
-	"authService/internal/repository"
-	"authService/utils"
+	"example.com/internal/dto"
+	"example.com/utils"
 	"gopkg.in/mail.v2"
 	"log"
 	"os"
@@ -15,7 +14,6 @@ type (
 		Send(dto *dto.ConfirmationDTO) error
 	}
 	EmailConfirmationMailtrap struct {
-		repository *repository.UserRepository
 	}
 )
 

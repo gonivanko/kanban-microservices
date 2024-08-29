@@ -3,8 +3,6 @@ package initialisation
 import (
 	"authService/internal/http/controllers"
 	"authService/internal/models"
-	"authService/internal/queue"
-	"authService/internal/queue/listeners"
 	"authService/internal/repository"
 	"authService/internal/services"
 	"fmt"
@@ -23,18 +21,10 @@ func InitServiceContainer(db *gorm.DB) *dig.Container {
 		return db
 	})
 
-	container.Provide(queue.NewRabbitMQSender)
 	container.Provide(repository.NewUserRepository)
-	container.Provide(listeners.NewUserRegisteredListener)
+	container.Provide(services.NewEmailConfirmationService)
 	container.Provide(services.NewUserService)
 	container.Provide(controllers.NewUserController)
-
-	container.Provide(func(sender *queue.RabbitMQSender) func() {
-		return func() {
-			log.Println("Shutting down RabbitMQSender...")
-			sender.Shutdown()
-		}
-	})
 
 	return container
 }

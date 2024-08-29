@@ -63,22 +63,6 @@ func (u *UserController) Login(c *gin.Context) {
 	})
 }
 
-func (u *UserController) ConfirmEmail(c *gin.Context) {
-	token := c.DefaultQuery("token", "")
-	result := u.userService.ConfirmEmail(token)
-
-	if !result {
-		httpError := errors.NewHttpError("Invalid token", token, http.StatusBadRequest)
-		c.Error(httpError)
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"success": true,
-		"message": "Email confirmed",
-	})
-}
-
 func (u *UserController) Show(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 
