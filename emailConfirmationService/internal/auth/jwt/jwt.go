@@ -1,15 +1,15 @@
 package jwt
 
 import (
-	auth "authService/internal/auth/claims"
-	"authService/internal/models"
+	auth "example.com/internal/auth/claims"
+	"example.com/internal/dto"
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
 	"os"
 	"time"
 )
 
-func GenerateAuthToken(user *models.User) (string, error) {
+func GenerateAuthToken(user *dto.User) (string, error) {
 	claims := &auth.UserClaims{
 		Username: user.Username,
 		Email:    user.Email,

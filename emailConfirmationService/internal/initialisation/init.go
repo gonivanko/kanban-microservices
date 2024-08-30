@@ -1,10 +1,12 @@
 package initialisation
 
 import (
-	"authService/internal/http/controllers"
-	"authService/internal/models"
-	"authService/internal/repository"
-	"authService/internal/services"
+	"example.com/internal/http"
+	"example.com/internal/models"
+	"example.com/internal/queue"
+	"example.com/internal/queue/listeners"
+	"example.com/internal/repository"
+	"example.com/internal/services"
 	"fmt"
 	"go.uber.org/dig"
 	"gorm.io/driver/mysql"
@@ -16,15 +18,23 @@ import (
 func InitServiceContainer(db *gorm.DB) *dig.Container {
 	container := dig.New()
 
-	// Providing database
 	container.Provide(func() *gorm.DB {
 		return db
 	})
-
-	container.Provide(repository.NewUserRepository)
+	container.Provide(repository.NewEmailLogRepository)
+	container.Provide(queue.NewRabbitMQSender)
+	container.Provide(services.NewConfirmationService)
 	container.Provide(services.NewEmailConfirmationService)
-	container.Provide(services.NewUserService)
-	container.Provide(controllers.NewUserController)
+	container.Provide(listeners.NewUserRegisteredListener)
+
+	container.Provide(func(sender *queue.RabbitMQSender) func() {
+		return func() {
+			log.Println("Shutting down RabbitMQSender...")
+			sender.Shutdown()
+		}
+	})
+
+	container.Provide(http.NewEmailController)
 
 	return container
 }
@@ -47,7 +57,7 @@ func InitDatabase() *gorm.DB {
 }
 
 func MigrateSchemas(db *gorm.DB) {
-	err := db.AutoMigrate(&models.User{})
+	err := db.AutoMigrate(&models.EmailLog{})
 	if err != nil {
 		log.Fatal("Error migrating database")
 	}
