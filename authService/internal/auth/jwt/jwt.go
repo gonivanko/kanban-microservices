@@ -4,13 +4,13 @@ import (
 	auth "authService/internal/auth/claims"
 	"authService/internal/models"
 	"fmt"
-	"github.com/golang-jwt/jwt/v5"
 	"os"
 	"time"
 )
 
 func GenerateAuthToken(user *models.User) (string, error) {
 	claims := &auth.UserClaims{
+		Id:       user.ID,
 		Username: user.Username,
 		Email:    user.Email,
 		RegisteredClaims: jwt.RegisteredClaims{
