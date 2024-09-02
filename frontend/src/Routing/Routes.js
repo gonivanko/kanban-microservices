@@ -3,6 +3,7 @@ import { useAuth } from "../Providers/AuthProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import RegisterPage from "../Pages/RegisterPage";
 import LoginPage from "../Pages/LoginPage";
+import KanbanBoard, {HomePage} from "../Pages/HomePage";
 
 const Routes = () => {
     const { token } = useAuth();
@@ -33,7 +34,7 @@ const Routes = () => {
             children: [
                 {
                     path: "/",
-                    element: <div>User Home Page</div>,
+                    element: <KanbanBoard />,
                 },
                 {
                     path: "/profile",
