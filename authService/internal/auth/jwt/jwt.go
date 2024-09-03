@@ -4,6 +4,7 @@ import (
 	auth "authService/internal/auth/claims"
 	"authService/internal/models"
 	"fmt"
+	"github.com/golang-jwt/jwt/v5"
 	"os"
 	"time"
 )

@@ -40,9 +40,7 @@ func (p *ProjectController) GetProject(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"project": project,
-	})
+	c.JSON(http.StatusOK, project)
 }
 
 func (p *ProjectController) CreateProject(c *gin.Context) {
@@ -60,9 +58,7 @@ func (p *ProjectController) CreateProject(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{
-		"project": project,
-	})
+	c.JSON(http.StatusCreated, project)
 }
 
 func (p *ProjectController) DeleteProject(c *gin.Context) {
@@ -74,9 +70,7 @@ func (p *ProjectController) DeleteProject(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"project": project,
-	})
+	c.JSON(http.StatusOK, project)
 }
 
 func NewProjectController(service *services.ProjectsService) *ProjectController {

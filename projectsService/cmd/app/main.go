@@ -18,11 +18,12 @@ func main() {
 	r.Use(middleware.ErrorHandler())
 
 	container.Invoke(func(projectController *controllers.ProjectController) {
-		r.GET("/users/:userID/projects", projectController.GetProjects)
+		r.GET("/user/:userID/projects", projectController.GetProjects)
 		r.GET("/projects/:id", projectController.GetProject)
 		r.POST("/projects", projectController.CreateProject)
 		r.DELETE("/projects/:id", projectController.DeleteProject)
 	})
 
-	r.Run()
+	r.Run(":8082")
+
 }

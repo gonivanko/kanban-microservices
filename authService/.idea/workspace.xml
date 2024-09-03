@@ -5,10 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e4e86947-d411-414c-891c-d7cb8a0631ba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../emailConfirmationService/.idea/emailConfirmationService.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../emailConfirmationService/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../emailConfirmationService/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../migrations/changelog.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../migrations/changelog.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../gateway/internal/cache/redis.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/auth/claims/UserClaims.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/auth/claims/UserClaims.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/auth/jwt/jwt.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/auth/jwt/jwt.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../emailConfirmationService/.idea/emailConfirmationService.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../emailConfirmationService/.idea/emailConfirmationService.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gateway/cmd/app/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../gateway/cmd/app/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gateway/internal/initialisation/init.go" beforeDir="false" afterPath="$PROJECT_DIR$/../gateway/internal/initialisation/init.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gateway/internal/middleware/auth.go" beforeDir="false" afterPath="$PROJECT_DIR$/../gateway/internal/middleware/auth.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../projectsService/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../projectsService/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../projectsService/.idea/projectsService.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../projectsService/.idea/projectsService.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,18 +26,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "goloburdaivan"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;goloburdaivan&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/goloburdaivan/kanban-microservices.git",
-    "accountId": "43c57434-a0aa-4fc9-9a00-c8d1b0c9fec6"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/goloburdaivan/kanban-microservices.git&quot;,
+    &quot;accountId&quot;: &quot;43c57434-a0aa-4fc9-9a00-c8d1b0c9fec6&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -39,20 +46,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.automatic.dependencies.download&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;go.sdk.automatically.set&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Course/kanban-microservices/authService&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Go Build.go build authService/cmd/app.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.automatic.dependencies.download": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "go.sdk.automatically.set": "true",
+    "last_opened_file_path": "D:/Course/kanban-microservices/authService",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm"
   }
-}</component>
+}]]></component>
+  <component name="RunManager">
+    <configuration name="go build authService/cmd/app" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="authService" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="PACKAGE" />
+      <package value="authService/cmd/app" />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$/cmd/app/main.go" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build authService/cmd/app" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
