@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"invitationService/internal/dto"
 	"io/ioutil"
 	"net/http"
 	"os"
-	"projectsService/internal/dto"
 )
 
 type UserGetter interface {
-	GetUser(userID uint64) (*dto.UserDTO, error)
+	GetUser(userID uint) (*dto.UserDTO, error)
 }
 
 type UserGetterImpl struct {
@@ -24,7 +24,7 @@ func NewUserGetter() UserGetter {
 	}
 }
 
-func (u UserGetterImpl) GetUser(userID uint64) (*dto.UserDTO, error) {
+func (u UserGetterImpl) GetUser(userID uint) (*dto.UserDTO, error) {
 	url := fmt.Sprintf("%s/users/%d", u.baseURL, userID)
 	resp, err := http.Get(url)
 	if err != nil {

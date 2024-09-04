@@ -10,6 +10,8 @@ import (
 	"projectsService/internal/database"
 	"projectsService/internal/database/models"
 	"projectsService/internal/http/controllers"
+	"projectsService/internal/queue"
+	"projectsService/internal/queue/listeners"
 	"projectsService/internal/repository"
 	"projectsService/internal/services"
 )
@@ -22,11 +24,16 @@ func InitServiceContainer(db *gorm.DB) *dig.Container {
 	})
 
 	container.Provide(database.NewPaginator)
+	container.Provide(queue.NewRabbitMQSender)
 	container.Provide(repository.NewProjectRepository)
+	container.Provide(repository.NewProjectUserRepository)
 	container.Provide(repository.NewUserGetter)
 	container.Provide(services.NewProjectsService)
+	container.Provide(services.NewInvitationService)
 
 	container.Provide(controllers.NewProjectController)
+	container.Provide(controllers.NewInvitationController)
+	container.Provide(listeners.NewUserAcceptedInviteListener)
 
 	return container
 }
@@ -49,5 +56,9 @@ func InitDatabase() *gorm.DB {
 }
 
 func MigrateSchemas(db *gorm.DB) {
-	db.AutoMigrate(&models.Project{})
+	err := db.AutoMigrate(&models.Project{}, &models.ProjectUser{})
+	if err != nil {
+		log.Fatalf(err.Error())
+		return
+	}
 }

@@ -15,8 +15,17 @@ type ProjectDatabaseRepository struct {
 func (p *ProjectDatabaseRepository) GetProjects(userID uint, page, limit int) ([]models.Project, int, error) {
 	var projects []models.Project
 	var count int64
-	p.db.Model(&models.Project{}).Count(&count)
-	result := p.paginator.Paginate(page, limit).Where("owner_id = ?", userID).Find(&projects)
+
+	if err := p.db.Model(&models.Project{}).
+		Joins("LEFT JOIN project_users ON projects.id = project_users.project_id").
+		Where("projects.owner_id = ? OR project_users.user_id = ?", userID, userID).
+		Count(&count).Error; err != nil {
+		return nil, 0, err
+	}
+
+	result := p.paginator.Paginate(page, limit).Joins("LEFT JOIN project_users ON projects.id = project_users.project_id").
+		Where("projects.owner_id = ? OR project_users.user_id = ?", userID, userID).
+		Find(&projects)
 
 	return projects, int(count), result.Error
 }

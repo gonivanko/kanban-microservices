@@ -1,13 +1,12 @@
 package main
 
 import (
-	"authService/internal/config"
-	"authService/internal/http/controllers"
-	"authService/internal/http/middleware"
-	"authService/internal/initialisation"
-	"authService/internal/queue"
-	"authService/internal/queue/listeners"
 	"github.com/gin-gonic/gin"
+	"invitationService/internal/config"
+	"invitationService/internal/http/controllers"
+	"invitationService/internal/initialisation"
+	"invitationService/internal/queue"
+	"invitationService/internal/queue/listeners"
 	"log"
 	"os"
 	"os/signal"
@@ -17,12 +16,13 @@ import (
 func main() {
 	config.LoadConfig()
 	db := initialisation.InitDatabase()
-	container := initialisation.InitServiceContainer(db)
 	initialisation.MigrateSchemas(db)
+	container := initialisation.InitServiceContainer(db)
+
 	rabbitMQ := queue.NewRabbitMQ()
 
-	err := container.Invoke(func(userConfirmedEmail *listeners.UserConfirmedEmailListener) {
-		rabbitMQ.RegisterConsumer("user_confirmed_email", userConfirmedEmail.Listen)
+	err := container.Invoke(func(userRegisteredListener *listeners.UserInvitedListener) {
+		rabbitMQ.RegisterConsumer("user_invite", userRegisteredListener.Listen)
 	})
 	if err != nil {
 		log.Fatalf(err.Error())
@@ -36,18 +36,11 @@ func main() {
 	}()
 
 	r := gin.Default()
-	r.Use(middleware.ErrorHandler())
-	r.Use(middleware.CORSMiddleware())
-
-	container.Invoke(func(
-		userController *controllers.UserController,
-	) {
-		r.POST("/register", userController.Register)
-		r.POST("/login", userController.Login)
-		r.GET("/users/:id", userController.Show)
+	container.Invoke(func(invitationController *controllers.InvitationConfirmationController) {
+		r.GET("/confirm", invitationController.ConfirmInvitation)
 	})
 
-	r.Run(":8081")
+	r.Run(":8083")
 
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
