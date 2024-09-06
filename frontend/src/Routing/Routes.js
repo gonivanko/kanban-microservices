@@ -4,6 +4,8 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import RegisterPage from "../Pages/RegisterPage";
 import LoginPage from "../Pages/LoginPage";
 import KanbanBoard, {HomePage} from "../Pages/HomePage";
+import BoardPage from "../Pages/Board.jsx"
+
 
 const Routes = () => {
     const { token } = useAuth();
@@ -24,6 +26,10 @@ const Routes = () => {
         {
             path: "/login",
             element: <LoginPage />,
+        },
+        {
+            path: "/board",
+            element: <BoardPage />,
         },
     ];
 
