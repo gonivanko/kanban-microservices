@@ -1,0 +1,15 @@
+.root {
+  width: 100%;
+  display: grid;
+  place-items: center;
+  background-color: #e0f7fa;
+  border: 2px dashed #90caf9;
+  border-radius: 8px;
+  color: #000;
+  padding: 5%;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    opacity: 0.7;
+  }
+}
