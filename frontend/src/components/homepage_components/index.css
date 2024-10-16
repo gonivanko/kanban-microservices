@@ -111,7 +111,7 @@ html, body
     align-items: center;
 }
 
-.group-div
+.card-category
 {
     padding: 0.2rem 1.6rem;
     border-radius: var(--main-radius);
