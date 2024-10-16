@@ -1,5 +1,6 @@
 import { LogOut, Pencil } from "lucide-react";
 import styles from "./Header.module.scss";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   loading: boolean;
@@ -9,6 +10,16 @@ interface HeaderProps {
 }
 
 export default function Header({ loading, user }: HeaderProps) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/login");
+  };
+
+  const handleProfile = () => {
+    navigate("/profile");
+  };
+
   return (
     <div className={styles.paper}>
       <div className={styles.header}>
@@ -27,12 +38,12 @@ export default function Header({ loading, user }: HeaderProps) {
         </div>
         <div className={styles.buttons}>
           <Pencil
-            // onClick={handleOpen}
-            className={loading ? styles.disabled : ""}
+            onClick={handleProfile}
+            // className={loading ? styles.disabled : ""}
           />
           <LogOut
-            // onClick={handleOpenLogoutDialog}
-            className={loading ? styles.disabled : ""}
+            onClick={handleLogout}
+            // className={loading ? styles.disabled : ""}
           />
         </div>
       </div>

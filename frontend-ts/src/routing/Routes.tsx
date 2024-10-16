@@ -11,6 +11,7 @@ import { useAuth } from "../providers/AuthProvider";
 import { ProtectedRoute } from "./ProtectedRoute";
 import RegistrationStepper from "../components/RegistrationStepper/RegistrationStepper";
 import BoardPage from "../pages/BoardPage/BoardPage";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 
 const Routes: React.FC = () => {
   const { token } = useAuth();
@@ -41,7 +42,7 @@ const Routes: React.FC = () => {
         },
         {
           path: "/profile",
-          element: <div>User Profile</div>,
+          element: <ProfilePage />,
         },
       ],
     },

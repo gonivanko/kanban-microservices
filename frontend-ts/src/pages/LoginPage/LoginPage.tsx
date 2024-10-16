@@ -31,6 +31,8 @@ export default function LoginPage() {
         setError(err.response.data.description);
         setShowError(true);
       });
+
+    navigate("/");
   };
 
   return (

@@ -3,11 +3,13 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 type AlertSlice = {
   showProject: boolean;
   showTask: boolean;
+  showEditProfile: boolean;
 };
 
 const initialState: AlertSlice = {
   showProject: false,
   showTask: false,
+  showEditProfile: false,
 };
 
 export const alertSlice = createSlice({
@@ -20,8 +22,12 @@ export const alertSlice = createSlice({
     setShowTask: (state, action: PayloadAction<boolean>) => {
       state.showTask = action.payload;
     },
+    setShowEditProfile: (state, action: PayloadAction<boolean>) => {
+      state.showEditProfile = action.payload;
+    },
   },
 });
 
-export const { setShowProject, setShowTask } = alertSlice.actions;
+export const { setShowProject, setShowTask, setShowEditProfile } =
+  alertSlice.actions;
 export default alertSlice.reducer;
