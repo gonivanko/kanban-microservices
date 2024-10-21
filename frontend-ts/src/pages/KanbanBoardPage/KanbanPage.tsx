@@ -8,6 +8,7 @@ import Header from "../../components/Header/Header";
 import { useAppDispatch } from "../../hooks/redux-hooks";
 import { setShowProject } from "../../redux/slices/alertSlice";
 import NewProjectModal from "../../components/Modals/NewProjectModal";
+import { Link } from "react-router-dom";
 
 interface Project {
   name: string;
@@ -53,7 +54,7 @@ const KanbanBoard: React.FC = () => {
         <Header loading={loading} user={null} />
         <SearchBar type="project" />
         <div className={styles.projects_block}>
-          {loading
+          {/* {loading
             ? Array.from(new Array(3)).map((_, index) => (
                 <div key={index} className={styles.projectCard}></div>
               ))
@@ -63,7 +64,18 @@ const KanbanBoard: React.FC = () => {
                   <p>{project.description}</p>
                   <button>Open</button>
                 </div>
-              ))}
+              ))} */}
+          {Array.from(new Array(3)).map((_, index) => (
+            <div key={index} className={styles.projectCard}>
+              <h6>Frontend Project</h6>
+              <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                Placeat alias inventore unde a excepturi. Repellendus dolore
+                reiciendis nam quam blanditiis!
+              </p>
+              <Link to={`/board?id=${index + 1}`}>Open</Link>
+            </div>
+          ))}
           <div className={styles.addProjectCard} onClick={handleOpenAlert}>
             <Plus />
             <span>New Project</span>

@@ -10,7 +10,7 @@ export default function ProfileCard() {
     <article className={styles.root}>
       <div className={styles.header}>
         <div className={styles.avatar_block}>
-          <div className={styles.avatar} />
+          <div className={styles.avatar}>{"Alexa Rawles".substring(0, 2)}</div>
           <div className={styles.text}>
             <h4>Alexa Rawles</h4>
             <p>alexa@gmail.com</p>

@@ -3,8 +3,18 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux-hooks";
 import { setShowEditProfile } from "../../redux/slices/alertSlice";
 import styles from "./NewProjectModal.module.scss";
 import { info_labels } from "../../static_store/personal_labels";
+import { useState } from "react";
 
 export default function EditProfileModal() {
+  const [formValues, setFormValues] = useState({
+    fullName: "Alexa Rawles",
+    gender: "Female",
+    language: "English",
+    country: "Spain",
+    nickName: "alexaraw4",
+    timeZone: "GMT+2",
+  });
+
   const dispatch = useAppDispatch();
 
   const { showEditProfile } = useAppSelector((state) => state.alert);
@@ -25,25 +35,25 @@ export default function EditProfileModal() {
           <X onClick={handleClose} />
         </div>
         {info_labels.map((label) => {
-          return label === "Gender" ||
-            label === "Language" ||
-            label === "Country" ||
-            label === "Time Zone" ? (
+          return label.label === "Gender" ||
+            label.label === "Language" ||
+            label.label === "Country" ||
+            label.label === "Time Zone" ? (
             <select
-              key={label}
+              key={label.label}
               className={styles.inputField}
               defaultValue="placeholder"
             >
               <option value="placeholder" disabled>
-                {label}
+                {label.value}
               </option>
             </select>
           ) : (
             <input
-              key={label}
+              key={label.label}
               type="text"
               className={styles.inputField}
-              placeholder={label}
+              value={label.value}
             />
           );
         })}

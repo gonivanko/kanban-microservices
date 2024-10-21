@@ -9,9 +9,9 @@ export default function FormBlock() {
       <div className={styles.column}>
         {column_1.map((col) => {
           return (
-            <div key={col}>
-              <p>{col}</p>
-              <input type="text" placeholder={col} disabled />
+            <div key={col.label}>
+              <p>{col.label}</p>
+              <input type="text" placeholder={col.value} disabled />
             </div>
           );
         })}
@@ -19,9 +19,9 @@ export default function FormBlock() {
       <div className={styles.column}>
         {column_2.map((col) => {
           return (
-            <div key={col}>
-              <p>{col}</p>
-              <input type="text" placeholder={col} disabled />
+            <div key={col.label}>
+              <p>{col.label}</p>
+              <input type="text" placeholder={col.value} disabled />
             </div>
           );
         })}
